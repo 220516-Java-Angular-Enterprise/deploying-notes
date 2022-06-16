@@ -67,10 +67,6 @@ check if was successful with `java -version`
 ### Step 3 Download Tomcat in EC22
 33.00 mins left (week 5 day 5)
 
-ssh into ec2
-
-run `sudo yum update`
-
 copy  link of tar.gz version you want (I will use 8.5)
 
 run `sudo wget "link"`
