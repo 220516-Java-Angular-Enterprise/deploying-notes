@@ -1,11 +1,14 @@
 # Jenkins
 
+This guide goes over the process of deploying jenkins on an ec2 instance.
+
+## Index
+1. Pre-Req
+2. Setting up 1st EC2
+3. Setting up 2nd EC2
+4. Setting up Jenkins
+
 ## Pre-Req
-
-## AWS
-
-### Pre-req
-
 ### Thing That Will Be Helpful to Know
 
 #### Bash Commands
@@ -41,7 +44,9 @@ In vim you can be in either edit mode, read mode
 - `:wq` - save and quit
 
 ---
-## Step 1 Create An EC2
+## Setting Up First EC2
+
+### Step 1 Create An EC2
 
 You can find a guide to create an ec2 instance [here](https://github.com/220516-Java-Angular-Enterprise/ec2-guide)
 
@@ -52,14 +57,14 @@ SSH into EC2 Instance
  
 run `sudo yum update` 
 
-## Step 2 Install JDK 8
+### Step 2 Install JDK 8
 video reference (27:26)
 
 run `sudo yum install java-1.8.0-openjdk`
 
 check if was successful with `java -version`
 
-## Step 3 Download Tomcat in EC22
+### Step 3 Download Tomcat in EC22
 33.00 mins left (week 5 day 5)
 
 ssh into ec2
@@ -86,7 +91,7 @@ remove tar.gz
 
 rename to tomcat
 
-### Optional Rename File to tomcat
+#### Optional Rename File to tomcat
 
 I will rename the directory to tomcat. Please note that some
 future commands will be based on this directory change.
@@ -95,12 +100,12 @@ future commands will be based on this directory change.
 
 `mv apache-tomcat-8.5.81/ tomcat`
 
-## Step 4 Edit the Tomcat XML
+### Step 4 Edit the Tomcat XML
 
 To edit these xml in the ec2 we need to use vim. Please refer
 to the ... for help.
 
-### Step 4.1 Edit tomcat-users.xml
+#### Step 4.1 Edit tomcat-users.xml
 Open tomcat-users.xml in vim
 
 `vi /opt/tomcat/conf/tomcat-users.xml`
@@ -117,7 +122,7 @@ insert this code in the `<tomcat-user>` tag
 How to do
 > press `i` key (this will bring you to vim edit mode)
 
-#### Save and Quit Out of Vim
+Save and Quit Out of Vim
 
 How to Do 
   > 
@@ -129,7 +134,7 @@ How to Do
 
 (find / -name context.xml) - might not be neccessary
 
-### Step 4.2 Edit context.xml in host-managers
+#### Step 4.2 Edit context.xml in host-managers
 
 `vi /opt/tomcat/weapps/host-manager/META-INF/context.xml`
 
@@ -137,7 +142,7 @@ comment line out that has the Valve namespace
 
 save and quit out of vim
 
-### Step 4.3 Edit context.xml in managers
+#### Step 4.3 Edit context.xml in managers
 
 `vi /opt/tomcat/weapps/manager/META-INF/context.xml`
 
@@ -152,29 +157,30 @@ to get cat log ssh into tomcat ec2
 cd to tomcat/logs
 
 ---
+## Setting Setting up 2nd EC2
 
-## Step 5 Create EC2 For Jenkins 
+### Step 5 Create EC2 For Jenkins 
 
 same process as Step 1 just name this instance `jenkins`
 
-## Step 6 Install Docker
+### Step 6 Install Docker
 
 run `sudo yum install docker` and type `y`.
 
-## Step 7 Start Docker
+### Step 7 Start Docker
 
 run `sudo service docker `
 
-## Step 8 Pull Tomcat to Docker
+### Step 8 Pull Jenkins to Docker
 
-run `sudo pull tomcat`
+run `sudo pull jenkins/jenkins:lts`
 
-## Step 9 Run Tomcat
+### Step 9 Run Jenkins
 
 run `docker run -d -p 8080:8080 --name jenkins-server jenkins/jenkins:lts`
 
 
-## Step 10 Get Jenkins Pass
+### Step 10 Get Jenkins Pass
 ssh into docker and jenken
 
 run `docker exec -u 0 -it jenkins-server bash`
@@ -198,7 +204,7 @@ run `sudo yum install docker` and type `y`.
 
 run `sudo service docker `
 
-## Step 3 Pull Tomcat to Docker
+## Step 3 Pull Jenkins to Docker
 
 run `sudo pull tomcat`
 
