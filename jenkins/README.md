@@ -136,6 +136,8 @@ How to Do
 
 comment line out that has the Valve namespace
 
+![](../img/ec2-tomcat-comment-valve.png)
+
 save and quit out of vim
 
 #### Step 4.3 Edit context.xml in managers
@@ -143,7 +145,7 @@ save and quit out of vim
 `vi /opt/tomcat/weapps/manager/META-INF/context.xml`
 
 comment line out that has the Valve namespace
-
+![](../img/ec2-tomcat-comment-valve.png)
 save and quit out of vim
 
 ### Random Tomcat info
@@ -185,6 +187,104 @@ run `cat /var/jenkins_home/secrets/initialAdminPassword`
 
 copy pass and login
 
+---
+## Setting Up Jenkins
+(57:00 mins)
+
+### Step 11 Select `Install suggested plugins`
+![](../img/ec2-jenkins-step11.png)
+
+### Step 12 Add User Data
+(email and full name is not validated so you can add pusedo info)
+![](../img/ec2-jenkins-step12.png)
+
+### Step 13 Confirm Jenkins Url
+You can keep this defualt (It should be you ec2 instance and the port jenkins is on)
+![](../img/ec2-jenkins-step13.png)
+
+---
+## Using Jenkins to Deploy Your WAR
+
+### Step 14 Install Deploy Plug-In
+We need to install the deploy plugin so first
+click `Mange Jenkins`
+![](../img/ec2-jenkins-step14.1.png)
+
+click `Manage Plugins`
+
+![](../img/ec2-jenkins-step14.2.png)
+
+search `deploy`
+![](../img/ec2-jenkins-step14.3.png)
+click  `Available`
+![](../img/ec2-jenkins-step14.4.png)
+select `Deploy to container`
+![](../img/ec2-jenkins-step14.5.png)
+click `Install without restart`
+![](../img/ec2-jenkins-step14.6.png)
+
+### Step 14 Click `New Item`
+#### Pre-req
+
+##### 15.1.1
+Get git hup url where war file is hosted
+![](../img/ec2-jenkins-step15.1.1.png)
+
+##### 15.1.2
+Get url of the tomcat you hosted in the Setting Up First EC2 Section
+![](../img/ec2-jenkins-step15.1.2.png)
+
+#### Creating a New Item
+Get the url of the repository you war file is hosted
+![](../img/ec2-jenkins-step15.2.png)
+
+Create name for your demo and select `Freestyle project`
+
+![](../img/ec2-jenkins-step15.3.png)
+
+In `Source Code Mangement` select git and paste the url of step 15.1.1
+![](../img/ec2-jenkins-step15.4.png)
+
+In `Branch Specifier` put the branch name where your war file is located for this demo the war file was in the `deploy` branch
+![](../img/ec2-jenkins-step15.5.png)
+
+Select `Delete workspace before build starts` in `Build Environment`
+![](../img/ec2-jenkins-step15.6.png)
+
+Select `Deploy war/ear to a container`
+![](../img/ec2-jenkins-step15.7.png)
+
+In  `War/EAR files` type `**/*.war`
+![](../img/ec2-jenkins-step15.8.png)
+
+In `Context path` Type the name of the app
+![](../img/ec2-jenkins-step15.9.png)
+
+In `Containers` add your version of Tomcat
+![](../img/ec2-jenkins-step15.10.png)
+
+Click `Add` in `Credentials`
+![](../img/ec2-jenkins-step15.11.png)
+
+Add your Tomcat credentials in the `users.xml` (for example **Username:** admin **Password:** revature)
+![](../img/ec2-jenkins-step15.12.png)
+
+Enter Tomcat Url from your instance (Step 15.1.2)
+![](../img/ec2-jenkins-step15.13.png)
+
+You can now click `Apply` and `Save`
+
+In the next screen click `Build Now`
+![](../img/ec2-jenkins-step15.14.png)
+
+And Hopefully you build is successful
+![](../img/ec2-jenkins-step15.15.png)
+
+---
+
+### Hai's fix of jenkins not being able to read db.properties
+
+(Need to implement)
 
 ---
 ## Tomcat In Docker (Optional)
